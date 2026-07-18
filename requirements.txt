@@ -1,0 +1,10 @@
+--extra-index-url https://download.pytorch.org/whl/cu121
+torch
+torchvision
+torchaudio
+faster-whisper
+mediapipe
+opencv-python
+requests
+fastapi
+uvicorn
