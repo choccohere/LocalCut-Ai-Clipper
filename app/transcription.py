@@ -55,6 +55,7 @@ class LocalTranscriber:
         
         result_words = []
         for segment in segments:
+            # pyrefly: ignore [not-iterable]
             for word in segment.words:
                 result_words.append({
                     "word": word.word.strip(),

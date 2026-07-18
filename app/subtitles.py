@@ -60,6 +60,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
             current_group.append(w['word'])
             
             # Group by 2-3 words, or if there's a long pause, or punctuation
+            # pyrefly: ignore [missing-attribute]
             if len(current_group) >= 3 or w['word'].endswith(('.', '?', '!', ',')):
                 grouped.append({
                     "text": " ".join(current_group),

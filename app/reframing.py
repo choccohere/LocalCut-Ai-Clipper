@@ -38,13 +38,14 @@ class VideoReframer:
         temp_audio = input_video + ".temp_audio.aac"
         temp_video_no_audio = input_video + ".temp_video.mp4"
         
-        # Extract audio first
+        # Extract audio first (re-encode to AAC to ensure compatibility regardless of source codec)
         subprocess.run(
-            ["ffmpeg", "-y", "-i", input_video, "-vn", "-acodec", "copy", temp_audio], 
+            ["ffmpeg", "-y", "-i", input_video, "-vn", "-c:a", "aac", temp_audio], 
             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
         )
         
         # Setup OpenCV VideoWriter
+        # pyrefly: ignore [missing-attribute]
         fourcc = cv2.VideoWriter_fourcc(*'mp4v')
         out = cv2.VideoWriter(temp_video_no_audio, fourcc, fps, (target_w, target_h))
         
@@ -66,8 +67,10 @@ class VideoReframer:
             results = self.face_detection.process(rgb_frame)
             
             center_x = default_center_x
+            # pyrefly: ignore [missing-attribute]
             if results.detections:
                 # Take the first prominent face
+                # pyrefly: ignore [bad-index]
                 detection = results.detections[0]
                 bboxC = detection.location_data.relative_bounding_box
                 # bbox is normalized relative to frame dimensions
